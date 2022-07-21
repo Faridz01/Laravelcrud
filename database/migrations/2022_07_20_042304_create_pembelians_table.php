@@ -16,10 +16,10 @@ class CreatePembeliansTable extends Migration
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
             $table->string('nama_pembeli');
-            $table->string('nama_barang');
-            $table->string('jumlah_harga');
-            $table->string('harga_satuan');
             $table->date('tgl_pembelian');
+            $table->string('nama_barang');
+            $table->string('harga_satuan');
+            $table->string('jumlah_barang');
             $table->text('total_harga');
             $table->timestamps();
         });

@@ -18,10 +18,11 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        //menampilkan data dari model pembelian
+        //menampilkan semua data dari model Siswa
         $pembelian = Pembelian::all();
         return view('pembelian.index', compact('pembelian'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,25 +43,25 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi
         $validated = $request->validate([
-            'nama' => 'required',
-            'nis' => 'required|unique:siswas|max:255',
-            'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'tgl_lahir' => 'required',
-            'alamat' => 'required',
+            'nama_pembeli' => 'required',
+            'tgl_pembelian' => 'required',
+            'nama_barang' => 'required',
+            'harga_satuan' => 'required',
+            'jumlah_barang' => 'required'
+
         ]);
 
-        $siswa = new Siswa();
-        $siswa->nama = $request->nama;
-        $siswa->nis = $request->nis;
-        $siswa->jenis_kelamin = $request->jenis_kelamin;
-        $siswa->agama = $request->agama;
-        $siswa->tgl_lahir = $request->tgl_lahir;
-        $siswa->alamat = $request->alamat;
-        $siswa->save();
-        return redirect()->route('siswa.index')
+        $pembelian = new Pembelian();
+        $pembelian->nama_pembeli = $request->nama_pembeli;
+        $pembelian->tgl_pembelian = $request->tgl_pembelian;
+        $pembelian->nama_barang = $request->nama_barang;
+        $pembelian->harga_satuan = $request->harga_satuan;
+        $pembelian->jumlah_barang = $request->jumlah_barang;
+        $pembelian->total_harga = $request->harga_satuan * $request->jumlah_barang;
+        $pembelian->save();
+        return redirect()->route('pembelian.index')
             ->with('success', 'Data berhasil dibuat!');
     }
 
@@ -72,7 +73,8 @@ class PembelianController extends Controller
      */
     public function show($id)
     {
-        //
+        $pembelian = Pembelian::findOrFail($id);
+        return view('pembelian.show', compact('pembelian'));
     }
 
     /**
@@ -83,7 +85,9 @@ class PembelianController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pembelian = Pembelian::findOrFail($id);
+        return view('pembelian.edit', compact('pembelian'));
+
     }
 
     /**
@@ -95,7 +99,27 @@ class PembelianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validasi
+        $validated = $request->validate([
+            'nama_pembeli' => 'required',
+            'tgl_pembelian' => 'required',
+            'nama_barang' => 'required',
+            'harga_satuan' => 'required',
+            'jumlah_barang' => 'required'
+
+            
+        ]);
+
+        $pembelian = Pembelian::findOrFail($id);
+        $pembelian->nama_pembeli = $request->nama_pembeli;
+        $pembelian->tgl_pembelian = $request->tgl_pembelian;
+        $pembelian->nama_barang = $request->nama_barang;
+        $pembelian->harga_satuan = $request->harga_satuan;
+        $pembelian->jumlah_barang = $request->jumlah_barang;
+        $pembelian->total_harga = $request->harga_satuan * $request->jumlah_barang;
+        $pembelian->save();
+        return redirect()->route('pembelian.index')
+            ->with('success', 'Data berhasil diedit!');
     }
 
     /**
@@ -106,6 +130,9 @@ class PembelianController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pembelian = Pembelian::findOrFail($id);
+        $pembelian->delete();
+        return redirect()->route('pembelian.index')
+            ->with('success', 'Data berhasil dihapus!');
     }
 }

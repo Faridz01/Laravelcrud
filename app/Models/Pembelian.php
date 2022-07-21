@@ -9,7 +9,8 @@ class Pembelian extends Model
 {
     use HasFactory;
     // field apa saja yang bisa di isi
-    public $fillable = ['nama_pembeli', 'nama_barang', 'jumlah_harga', 'harga_satuan', 'tgl_pembelian', 'total_harga'];
+    public $fillable = ['nama_pembeli', 'tgl_pembelian', 'nama_barang', 'harga_satuan','jumlah_barang', 'total_harga'];
+
     // membuat fitur created_at(kapan data dibuat) & updated_at (kapan data diedit)
     // aktif
     public $timestamps = true;
