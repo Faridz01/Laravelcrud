@@ -29,3 +29,7 @@ Route::resource('siswa', SiswaController::class);
 
 //route pembelian
 Route::resource('pembelian', PembelianController::class);
+//
+Route :: get ('test-template', function(){
+    return view('layouts.admin');
+});
