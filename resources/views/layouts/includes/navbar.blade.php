@@ -127,9 +127,12 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
+        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();" role="button">
+          <i class="fas fa-th-large">logout</i>
         </a>
+        <form action="{{route('logout')}}" id="logout-form" method="post"></form>
+        @csrf
       </li>
     </ul>
   </nav>
